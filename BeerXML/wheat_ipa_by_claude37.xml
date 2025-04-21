@@ -1,0 +1,252 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RECIPES>
+ <RECIPE>
+  <NAME>Wheat IPA</NAME>
+  <VERSION>1</VERSION>
+  <TYPE>All Grain</TYPE>
+  <BREWER>Brewfather User</BREWER>
+  <BATCH_SIZE>20.00</BATCH_SIZE>
+  <BOIL_SIZE>25.00</BOIL_SIZE>
+  <BOIL_TIME>60.00</BOIL_TIME>
+  <EFFICIENCY>75.0</EFFICIENCY>
+  <TASTE_NOTES>Smooth, medium body with nice wheat character, complemented by citrus and tropical fruit hop flavors.</TASTE_NOTES>
+  <NOTES>A delicious wheat-forward IPA with citrusy hops from Brewfather inventory.</NOTES>
+  <STYLE>
+   <NAME>American Wheat Beer</NAME>
+   <CATEGORY>Wheat Beer</CATEGORY>
+   <CATEGORY_NUMBER>1</CATEGORY_NUMBER>
+   <STYLE_LETTER>D</STYLE_LETTER>
+   <STYLE_GUIDE>BJCP 2015</STYLE_GUIDE>
+   <TYPE>Ale</TYPE>
+   <OG_MIN>1.040</OG_MIN>
+   <OG_MAX>1.055</OG_MAX>
+   <FG_MIN>1.008</FG_MIN>
+   <FG_MAX>1.013</FG_MAX>
+   <IBU_MIN>15</IBU_MIN>
+   <IBU_MAX>30</IBU_MAX>
+   <COLOR_MIN>3</COLOR_MIN>
+   <COLOR_MAX>6</COLOR_MAX>
+   <ABV_MIN>4.0</ABV_MIN>
+   <ABV_MAX>5.5</ABV_MAX>
+  </STYLE>
+  
+  <FERMENTABLES>
+   <FERMENTABLE>
+    <NAME>Weyermann Wheat Malt, Pale</NAME>
+    <TYPE>Grain</TYPE>
+    <AMOUNT>4.00</AMOUNT>
+    <YIELD>78.0</YIELD>
+    <COLOR>3.9</COLOR>
+    <ORIGIN>Germany</ORIGIN>
+    <SUPPLIER>Weyermann</SUPPLIER>
+   </FERMENTABLE>
+   <FERMENTABLE>
+    <NAME>Weyermann Pilsner</NAME>
+    <TYPE>Grain</TYPE>
+    <AMOUNT>3.00</AMOUNT>
+    <YIELD>82.0</YIELD>
+    <COLOR>3.3</COLOR>
+    <ORIGIN>Germany</ORIGIN>
+    <SUPPLIER>Weyermann</SUPPLIER>
+   </FERMENTABLE>
+   <FERMENTABLE>
+    <NAME>Crisp Flaked Torrefied Oats</NAME>
+    <TYPE>Grain</TYPE>
+    <AMOUNT>0.50</AMOUNT>
+    <YIELD>77.0</YIELD>
+    <COLOR>5.0</COLOR>
+    <ORIGIN>UK</ORIGIN>
+    <SUPPLIER>Crisp</SUPPLIER>
+   </FERMENTABLE>
+   <FERMENTABLE>
+    <NAME>Weyermann Carared</NAME>
+    <TYPE>Grain</TYPE>
+    <AMOUNT>0.30</AMOUNT>
+    <YIELD>78.0</YIELD>
+    <COLOR>47.5</COLOR>
+    <ORIGIN>Germany</ORIGIN>
+    <SUPPLIER>Weyermann</SUPPLIER>
+   </FERMENTABLE>
+  </FERMENTABLES>
+  
+  <HOPS>
+   <HOP>
+    <NAME>Magnum</NAME>
+    <VERSION>1</VERSION>
+    <ALPHA>12.0</ALPHA>
+    <AMOUNT>0.010</AMOUNT>
+    <USE>Boil</USE>
+    <TIME>60.0</TIME>
+    <FORM>Pellet</FORM>
+   </HOP>
+   <HOP>
+    <NAME>Mosaic</NAME>
+    <VERSION>1</VERSION>
+    <ALPHA>14.4</ALPHA>
+    <AMOUNT>0.030</AMOUNT>
+    <USE>Boil</USE>
+    <TIME>15.0</TIME>
+    <FORM>Pellet</FORM>
+   </HOP>
+   <HOP>
+    <NAME>Citra</NAME>
+    <VERSION>1</VERSION>
+    <ALPHA>11.8</ALPHA>
+    <AMOUNT>0.030</AMOUNT>
+    <USE>Boil</USE>
+    <TIME>15.0</TIME>
+    <FORM>Pellet</FORM>
+   </HOP>
+   <HOP>
+    <NAME>Galaxy</NAME>
+    <VERSION>1</VERSION>
+    <ALPHA>17.8</ALPHA>
+    <AMOUNT>0.040</AMOUNT>
+    <USE>Boil</USE>
+    <TIME>5.0</TIME>
+    <FORM>Pellet</FORM>
+   </HOP>
+   <HOP>
+    <NAME>Citra</NAME>
+    <VERSION>1</VERSION>
+    <ALPHA>11.8</ALPHA>
+    <AMOUNT>0.050</AMOUNT>
+    <USE>Aroma</USE>
+    <TIME>20.0</TIME>
+    <FORM>Pellet</FORM>
+   </HOP>
+   <HOP>
+    <NAME>Mosaic</NAME>
+    <VERSION>1</VERSION>
+    <ALPHA>14.4</ALPHA>
+    <AMOUNT>0.050</AMOUNT>
+    <USE>Aroma</USE>
+    <TIME>20.0</TIME>
+    <FORM>Pellet</FORM>
+   </HOP>
+   <HOP>
+    <NAME>Galaxy</NAME>
+    <VERSION>1</VERSION>
+    <ALPHA>17.8</ALPHA>
+    <AMOUNT>0.040</AMOUNT>
+    <USE>Aroma</USE>
+    <TIME>20.0</TIME>
+    <FORM>Pellet</FORM>
+   </HOP>
+   <HOP>
+    <NAME>Citra</NAME>
+    <VERSION>1</VERSION>
+    <ALPHA>11.8</ALPHA>
+    <AMOUNT>0.050</AMOUNT>
+    <USE>Dry Hop</USE>
+    <TIME>3.0</TIME>
+    <FORM>Pellet</FORM>
+   </HOP>
+   <HOP>
+    <NAME>Mosaic</NAME>
+    <VERSION>1</VERSION>
+    <ALPHA>14.4</ALPHA>
+    <AMOUNT>0.050</AMOUNT>
+    <USE>Dry Hop</USE>
+    <TIME>3.0</TIME>
+    <FORM>Pellet</FORM>
+   </HOP>
+  </HOPS>
+  
+  <YEASTS>
+   <YEAST>
+    <NAME>Brewly W3470 W34/70</NAME>
+    <VERSION>1</VERSION>
+    <TYPE>Lager</TYPE>
+    <FORM>Dry</FORM>
+    <AMOUNT>1.0</AMOUNT>
+    <AMOUNT_IS_WEIGHT>FALSE</AMOUNT_IS_WEIGHT>
+    <LABORATORY>Brewly</LABORATORY>
+    <PRODUCT_ID>W3470</PRODUCT_ID>
+    <ATTENUATION>81.0</ATTENUATION>
+   </YEAST>
+  </YEASTS>
+  
+  <MISCS>
+   <MISC>
+    <NAME>Protafloc</NAME>
+    <VERSION>1</VERSION>
+    <TYPE>Fining</TYPE>
+    <USE>Boil</USE>
+    <TIME>15.0</TIME>
+    <AMOUNT>0.1</AMOUNT>
+    <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
+   </MISC>
+   <MISC>
+    <NAME>Calcium Chloride</NAME>
+    <VERSION>1</VERSION>
+    <TYPE>Water Agent</TYPE>
+    <USE>Mash</USE>
+    <AMOUNT>0.003</AMOUNT>
+    <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
+   </MISC>
+   <MISC>
+    <NAME>Gypsum</NAME>
+    <VERSION>1</VERSION>
+    <TYPE>Water Agent</TYPE>
+    <USE>Mash</USE>
+    <AMOUNT>0.003</AMOUNT>
+    <AMOUNT_IS_WEIGHT>TRUE</AMOUNT_IS_WEIGHT>
+   </MISC>
+  </MISCS>
+  
+  <WATERS>
+   <WATER>
+    <NAME>Balanced Profile</NAME>
+    <VERSION>1</VERSION>
+    <AMOUNT>20.0</AMOUNT>
+    <CALCIUM>80.0</CALCIUM>
+    <BICARBONATE>50.0</BICARBONATE>
+    <SULFATE>100.0</SULFATE>
+    <CHLORIDE>100.0</CHLORIDE>
+    <SODIUM>10.0</SODIUM>
+    <MAGNESIUM>5.0</MAGNESIUM>
+    <PH>5.4</PH>
+   </WATER>
+  </WATERS>
+  
+  <MASH>
+   <NAME>Single Infusion Mash</NAME>
+   <VERSION>1</VERSION>
+   <GRAIN_TEMP>20.0</GRAIN_TEMP>
+   <MASH_STEPS>
+    <MASH_STEP>
+     <NAME>Saccharification</NAME>
+     <VERSION>1</VERSION>
+     <TYPE>Infusion</TYPE>
+     <STEP_TEMP>67.0</STEP_TEMP>
+     <STEP_TIME>60.0</STEP_TIME>
+    </MASH_STEP>
+    <MASH_STEP>
+     <NAME>Mash Out</NAME>
+     <VERSION>1</VERSION>
+     <TYPE>Temperature</TYPE>
+     <STEP_TEMP>75.0</STEP_TEMP>
+     <STEP_TIME>10.0</STEP_TIME>
+    </MASH_STEP>
+   </MASH_STEPS>
+  </MASH>
+  
+  <FERMENTATION_STAGES>
+   <FERMENTATION_STAGE>
+    <NAME>Primary</NAME>
+    <VERSION>1</VERSION>
+    <TYPE>Primary</TYPE>
+    <TEMP>18.0</TEMP>
+    <TIME>10.0</TIME>
+   </FERMENTATION_STAGE>
+   <FERMENTATION_STAGE>
+    <NAME>Secondary</NAME>
+    <VERSION>1</VERSION>
+    <TYPE>Secondary</TYPE>
+    <TEMP>18.0</TEMP>
+    <TIME>4.0</TIME>
+   </FERMENTATION_STAGE>
+  </FERMENTATION_STAGES>
+ </RECIPE>
+</RECIPES>
