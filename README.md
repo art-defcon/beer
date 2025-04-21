@@ -25,7 +25,8 @@ The recipes are organized into two main directories:
 ## 🍻 Current Contents
 
 ### Available Recipes:
-- **Wheat IPA** (`BeerXML/wheat_ipa_by_claude37.xml`) - A delicious wheat-forward IPA with citrusy hops
+- **Wheat IPA** (`BeerXML/wheat_ipa_by_claude37.xml`) - A delicious wheat-forward IPA with citrusy hops  
+  ![Wheat IPA Recipe Screenshot](https://github.com/art-defcon/beer/blob/main/public/screenshot_wheat_ipa.png)
 - **Hurry Up IPA** (`BrewfatherJson/HurryUpIPA.json`) - An American IPA with Amarillo and Mosaic hops, brewed with Voss Kveik yeast
 - **NEPA (New England Pale Ale)** (`BrewfatherJson/NEPANewEnglandPaleAle.json`) - A hazy, juicy pale ale with Citra, Galaxy, and Mosaic hops
 
