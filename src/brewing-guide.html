@@ -205,6 +205,14 @@
             box-shadow: 0 5px 15px rgba(0,0,0,0.2);
         }
         
+        /* Critical images that need to show full content */
+        .slide:nth-child(7) .brew-image,  /* Mash temperature monitoring */
+        .slide:nth-child(10) .brew-image, /* Boiling process images */
+        .slide:nth-child(14) .brew-image  /* Kegging equipment */ {
+            object-fit: contain;
+            background-color: #f8f9fa;
+        }
+        
         .two-column {
             display: grid;
             grid-template-columns: 1fr 1fr;
@@ -383,6 +391,16 @@
             .brew-image {
                 max-height: 250px;
                 margin: 15px auto;
+            }
+            
+            /* Critical images that need full height on specific slides */
+            .slide:nth-child(7) .brew-image,  /* Mash temperature */
+            .slide:nth-child(10) .brew-image, /* Boiling process */
+            .slide:nth-child(14) .brew-image  /* Kegging equipment */ {
+                max-height: none;
+                height: auto;
+                max-width: 100%;
+                object-fit: contain;
             }
             
             .recipe-table {
