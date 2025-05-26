@@ -1,39 +1,118 @@
-# 🍺 My Homebrew Recipe Collection 🍻
+# 🍺 My Beer Brewing Corner 🍻
 
-Welcome to my personal beer recipe vault! This repository contains my homebrew recipes in two popular formats: BeerXML and BrewfatherJson.
+Welcome to My Beer Brewing Corner! This is an open-source collection of craft beer recipes and comprehensive brewing knowledge, designed to help both beginners and experienced brewers.
 
-## 📋 Format Descriptions
+## 🌐 Interactive Website
+
+Visit the interactive website at: **[https://petroff.se/brew/](https://petroff.se/brew/)**
+
+The website features:
+- 📚 Interactive brewing guides
+- 🍺 Featured recipes with descriptions
+- 🗂️ Complete brewing vault with all recipes
+- 📱 Mobile-friendly responsive design
+
+## 📚 Brewing Guides
+
+### 🎓 Complete Homebrewing Guide
+![Homebrewing Guide](https://github.com/art-defcon/beer/blob/main/src/img/homebrewing_guide.png?raw=true)
+
+A comprehensive 19-slide interactive presentation covering everything from grain to glass:
+- Essential equipment and costs
+- Sanitization best practices
+- Understanding brewing terminology (OG, FG, IBU, SRM, etc.)
+- Mash temperature control and enzyme activity
+- Step-by-step brewing process
+- Pressure fermentation techniques
+- Troubleshooting common problems
+- Advanced tips for water chemistry and yeast management
+
+
+### 🏭 Brewery Scale & Recipe Formats
+![Brewery Scale Comparison](https://github.com/art-defcon/beer/blob/main/src/img/brewery_scale.png?raw=true)
+
+An educational presentation explaining the evolution from homebrew to industrial production:
+- Production scale overview (homebrew to industrial)
+- Recipe format comparison (BeerXML vs Brewfather JSON vs ISA-88)
+- Equipment and automation at different scales
+- Quality control and compliance requirements
+
+## 🍻 Featured Recipes
+
+### Hurry Up IPA
+![Hurry Up IPA](https://github.com/art-defcon/beer/blob/main/src/img/ipa_beer_glass_tapped_foamy_cloudy.jpeg?raw=true)
+
+An American IPA featuring tropical and citrus notes from Amarillo and Mosaic hops. Fermented with Voss Kveik yeast for a quick turnaround without sacrificing flavor.
+- **Style:** American IPA
+- **ABV:** 6.5%
+- **IBU:** 65
+- **Format:** [Brewfather JSON](BrewfatherJson/HurryUpIPA.json)
+
+### NEPA (New England Pale Ale)
+![NEPA](https://github.com/art-defcon/beer/blob/main/src/img/nepa_glass_beer_foamy.jpeg?raw=true)
+
+A hazy, juicy pale ale showcasing Citra, Galaxy, and Mosaic hops. Lower ABV makes it perfect for session drinking while maintaining that tropical fruit explosion.
+- **Style:** New England Pale Ale
+- **ABV:** 4.8%
+- **IBU:** 35
+- **Format:** [Brewfather JSON](BrewfatherJson/NEPANewEnglandPaleAle.json)
+
+### Wheat IPA
+A delicious wheat-forward IPA with citrusy hops, combining the smoothness of wheat with bold hop character.
+- **Style:** Wheat IPA
+- **Format:** [BeerXML](BeerXML/wheat_ipa_by_claude37.xml)
+
+## 📋 Recipe Formats
 
 ### 🌾 BeerXML
-BeerXML is an XML-based standard format for beer recipes that allows for easy sharing between different brewing software. It captures all the essential details of a recipe including:
-- Fermentables (grains, extracts, sugars)
-- Hops (varieties, amounts, addition times)
-- Yeasts
-- Mash schedules
-- Water profiles
-- Fermentation details
+Industry-standard XML format supported by most brewing software:
+- BeerSmith
+- Brewer's Friend
+- BeerTools
+- And many others
 
-### 🧪 BrewfatherJson
-BrewfatherJson is the JSON format used by the Brewfather app/software, a popular brewing tool for recipe formulation, brewing session tracking, and inventory management. This format makes it easy to import recipes directly into Brewfather for brewing day calculations and tracking.
+BeerXML files contain complete recipe details including fermentables, hops, yeast, mash schedules, and water profiles.
+
+### 🧪 Brewfather JSON
+Modern JSON format for the Brewfather app, offering:
+- Cloud-based recipe management
+- Real-time sync across devices
+- Brewing session tracking
+- Inventory management
+- Water chemistry calculations
 
 ## 📂 Repository Structure
 
-The recipes are organized into two main directories:
-- `/BeerXML/` - Contains recipes in BeerXML format
-- `/BrewfatherJson/` - Contains recipes in Brewfather's JSON format
-
-## 🍻 Current Contents
-
-### Available Recipes:
-- **Wheat IPA** (`BeerXML/wheat_ipa_by_claude37.xml`) - A delicious wheat-forward IPA with citrusy hops  
-  ![Wheat IPA Recipe Screenshot](https://github.com/art-defcon/beer/blob/main/public/screenshot_wheat_ipa.png)
-- **Hurry Up IPA** (`BrewfatherJson/HurryUpIPA.json`) - An American IPA with Amarillo and Mosaic hops, brewed with Voss Kveik yeast
-- **NEPA (New England Pale Ale)** (`BrewfatherJson/NEPANewEnglandPaleAle.json`) - A hazy, juicy pale ale with Citra, Galaxy, and Mosaic hops
+```
+beer/
+├── index.html                    # Main website
+├── BeerXML/                     # Classic XML format recipes
+│   └── wheat_ipa_by_claude37.xml
+├── BrewfatherJson/              # Modern JSON format recipes
+│   ├── HurryUpIPA.json
+│   └── NEPANewEnglandPaleAle.json
+├── src/
+│   ├── brewing-guide.html       # Complete homebrewing guide
+│   ├── brewery-scale-comparison.html  # Scale comparison presentation
+│   └── img/                     # Images for guides and recipes
+```
 
 ## 🔍 Usage
 
-These recipe files can be imported into various brewing software:
-- BeerXML files can be used with software like BeerSmith, Brewer's Friend, and other brewing applications that support the BeerXML standard
-- BrewfatherJson files can be directly imported into the Brewfather app
+### Importing Recipes
+- **BeerXML files:** Import directly into BeerSmith, Brewer's Friend, or any software supporting the BeerXML standard
+- **Brewfather JSON files:** Import directly into the Brewfather app
 
-Happy brewing! 🍺
+## 📜 License and 🤝 Contributing
+
+This project is open source. All recipes and guides are free to use, modify, and share.
+
+Feel free to:
+- Fork this repository
+- Try the recipes and suggest improvements
+
+---
+
+**Happy Brewing!** 🍺 
+
+*Remember: The best beer is the one you brew yourself!*

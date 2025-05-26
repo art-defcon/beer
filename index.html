@@ -1,0 +1,378 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Beer Brewing Corner</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+            min-height: 100vh;
+            padding: 20px;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+        
+        header {
+            text-align: center;
+            padding: 60px 0 40px 0;
+            margin-bottom: 20px;
+        }
+        
+        h1 {
+            font-size: 3.5em;
+            color: #2c3e50;
+            margin-bottom: 10px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.1);
+        }
+        
+        .emoji {
+            font-size: 1.2em;
+        }
+        
+        .tagline {
+            font-size: 1.5em;
+            color: #5a6c7d;
+            font-weight: 300;
+            margin-bottom: 30px;
+        }
+        
+        .intro {
+            background: rgba(255, 255, 255, 0.95);
+            padding: 30px;
+            border-radius: 20px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            margin-bottom: 40px;
+        }
+        
+        .intro h2 {
+            color: #34495e;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+        
+        .intro p {
+            color: #555;
+            line-height: 1.8;
+            margin-bottom: 15px;
+        }
+        
+        .formats {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 20px;
+            margin-top: 30px;
+        }
+        
+        .format-card {
+            background: rgba(52, 152, 219, 0.1);
+            padding: 20px;
+            border-radius: 15px;
+            border: 2px solid rgba(52, 152, 219, 0.2);
+        }
+        
+        .format-card h3 {
+            color: #2980b9;
+            margin-bottom: 10px;
+        }
+        
+        .section {
+            margin-bottom: 50px;
+        }
+        
+        .section-title {
+            font-size: 2.5em;
+            color: #2c3e50;
+            margin-bottom: 30px;
+            text-align: center;
+        }
+        
+        .cards-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            gap: 30px;
+        }
+        
+        .card {
+            background: rgba(255, 255, 255, 0.95);
+            border-radius: 20px;
+            overflow: hidden;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            cursor: pointer;
+        }
+        
+        .card:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 15px 40px rgba(0, 0, 0, 0.15);
+        }
+        
+        .card img {
+            width: 100%;
+            height: 250px;
+            object-fit: cover;
+        }
+        
+        .guide-card img {
+            object-fit: contain;
+            background: rgba(255, 255, 255, 0.95);
+            padding: 10px;
+        }
+        
+        .card-content {
+            padding: 25px;
+        }
+        
+        .card h3 {
+            color: #2c3e50;
+            margin-bottom: 10px;
+            font-size: 1.5em;
+        }
+        
+        .card p {
+            color: #666;
+            margin-bottom: 15px;
+        }
+        
+        .card-links {
+            display: flex;
+            gap: 10px;
+            flex-wrap: wrap;
+        }
+        
+        .btn {
+            display: inline-block;
+            padding: 8px 20px;
+            background: #3498db;
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-size: 14px;
+            transition: background 0.3s ease;
+        }
+        
+        .btn:hover {
+            background: #2980b9;
+        }
+        
+        .btn-secondary {
+            background: #95a5a6;
+        }
+        
+        .btn-secondary:hover {
+            background: #7f8c8d;
+        }
+        
+        .guide-label {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(155, 89, 182, 0.2);
+            color: #8e44ad;
+            border-radius: 15px;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+        
+        footer {
+            text-align: center;
+            padding: 40px 0;
+            color: #7f8c8d;
+        }
+        
+        .format-label {
+            display: inline-block;
+            padding: 4px 12px;
+            background: rgba(46, 204, 113, 0.2);
+            color: #27ae60;
+            border-radius: 15px;
+            font-size: 12px;
+            margin-bottom: 10px;
+        }
+        
+        .intro-text {
+            max-width: 800px;
+            margin: 0 auto;
+            font-size: 1.1em;
+            line-height: 1.8;
+            color: #2c3e50;
+        }
+        
+        .intro-text p {
+            margin-bottom: 15px;
+        }
+        
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2em;
+            }
+            
+            .section-title {
+                font-size: 1.8em;
+            }
+            
+            .cards-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1><span class="emoji">🍺</span> My Beer Brewing Corner <span class="emoji">🍻</span></h1>
+            <p class="tagline">An open-source collection of craft beer recipes and brewing knowledge</p>
+            <div class="intro-text">
+                <p>
+                    Welcome to My Beer Brewing Corner! This initiative is a personal homebrew recipe collection designed to share 
+                    brewing knowledge with the community. It stores beer recipes in industry-standard formats and includes 
+                    comprehensive educational guides about brewing at different scales.
+                </p>
+                <p>
+                    The project is built with AI assistance from Claude, making it easy to maintain and expand. All recipes are 
+                    tested and refined based on actual brewing experience, with meaningful improvements tracked through version control.
+                </p>
+            </div>
+            <div style="margin-top: 30px;">
+                <a href="https://github.com/art-defcon/beer" class="btn" target="_blank">
+                    <span style="margin-right: 5px;">📦</span> View on GitHub
+                </a>
+            </div>
+        </header>
+        
+        <section class="section">
+            <h2 class="section-title">📚 Brewing Guides</h2>
+            <div class="cards-grid">
+                <div class="card guide-card" onclick="window.location.href='src/brewing-guide.html'">
+                    <img src="src/img/homebrewing_guide.png" alt="Complete Homebrewing Guide">
+                    <div class="card-content">
+                        <span class="guide-label">Interactive Guide</span>
+                        <h3>Complete Homebrewing Guide</h3>
+                        <p>
+                            A comprehensive 19-slide presentation covering everything from grain to glass. Learn about 
+                            equipment, sanitization, mashing, fermentation, and troubleshooting. Perfect for beginners 
+                            and experienced brewers looking to refine their technique.
+                        </p>
+                        <div class="card-links">
+                            <a href="src/brewing-guide.html" class="btn">View Guide</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card guide-card" onclick="window.location.href='src/brewery-scale-comparison.html'">
+                    <img src="src/img/brewery_scale.png" alt="Brewery Scale Comparison">
+                    <div class="card-content">
+                        <span class="guide-label">Educational Resource</span>
+                        <h3>Brewery Scale & Recipe Formats</h3>
+                        <p>
+                            Understanding the evolution from homebrew to industrial production. Explore how recipe 
+                            formats evolve from simple BeerXML through Brewfather JSON to complex ISA-88 industrial 
+                            standards used by major breweries.
+                        </p>
+                        <div class="card-links">
+                            <a href="src/brewery-scale-comparison.html" class="btn">View Presentation</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">🍺 Featured Recipes</h2>
+            <div class="cards-grid">
+                <div class="card" onclick="window.open('BrewfatherJson/HurryUpIPA.json', '_blank')">
+                    <img src="src/img/ipa_beer_glass_tapped_foamy_cloudy.jpeg" alt="Hurry Up IPA">
+                    <div class="card-content">
+                        <span class="format-label">Brewfather JSON</span>
+                        <h3>Hurry Up IPA</h3>
+                        <p>
+                            An American IPA featuring the tropical and citrus notes of Amarillo and Mosaic hops. 
+                            Fermented with Voss Kveik yeast for a quick turnaround without sacrificing flavor. 
+                            Perfect for when you need a hoppy beer fast!
+                        </p>
+                        <div class="card-links">
+                            <a href="BrewfatherJson/HurryUpIPA.json" class="btn" download>Download Recipe</a>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="card" onclick="window.open('BrewfatherJson/NEPANewEnglandPaleAle.json', '_blank')">
+                    <img src="src/img/nepa_glass_beer_foamy.jpeg" alt="NEPA New England Pale Ale">
+                    <div class="card-content">
+                        <span class="format-label">Brewfather JSON</span>
+                        <h3>NEPA (New England Pale Ale)</h3>
+                        <p>
+                            A hazy, juicy pale ale showcasing the best of modern hop varieties. Citra, Galaxy, and 
+                            Mosaic hops create a tropical fruit explosion with a soft, pillowy mouthfeel. Lower ABV 
+                            makes it perfect for session drinking.
+                        </p>
+                        <div class="card-links">
+                            <a href="BrewfatherJson/NEPANewEnglandPaleAle.json" class="btn" download>Download Recipe</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        
+        <section class="section">
+            <h2 class="section-title">🗂️ The Brewing Vault</h2>
+            <div class="intro" style="margin-top: 30px;">
+                <p>
+                    The complete collection includes additional recipes in both BeerXML and Brewfather JSON formats. 
+                    Each recipe has been carefully tested and refined through multiple brewing sessions.
+                </p>
+                <div class="formats" style="margin-top: 30px;">
+                    <div class="format-card">
+                        <h3>🌾 BeerXML Format</h3>
+                        <p>
+                            Industry-standard XML format supported by BeerSmith, Brewer's Friend, and most brewing software. 
+                            Contains complete recipe details including fermentables, hops, yeast, and mash schedules.
+                        </p>
+                        <p style="margin-top: 10px;"><strong>Available recipes:</strong></p>
+                        <ul style="margin-top: 5px; padding-left: 20px;">
+                            <li>Wheat IPA by Claude37</li>
+                            <li>More recipes coming soon...</li>
+                        </ul>
+                    </div>
+                    <div class="format-card">
+                        <h3>🧪 Brewfather JSON</h3>
+                        <p>
+                            Modern JSON format for the popular Brewfather app. Perfect for cloud-based recipe management, 
+                            brewing session tracking, and inventory control with real-time sync across devices.
+                        </p>
+                        <p style="margin-top: 10px;"><strong>Available recipes:</strong></p>
+                        <ul style="margin-top: 5px; padding-left: 20px;">
+                            <li>Hurry Up IPA</li>
+                            <li>NEPA (New England Pale Ale)</li>
+                            <li>More recipes coming soon...</li>
+                        </ul>
+                    </div>
+                </div>
+                <p style="text-align: center; margin-top: 30px;">
+                    <a href="https://github.com/art-defcon/beer" class="btn" target="_blank">
+                        Browse Full Collection on GitHub
+                    </a>
+                </p>
+            </div>
+        </section>
+        
+        <footer>
+            <p>Happy Brewing! 🍺 | Built with passion for the craft</p>
+            <p style="margin-top: 10px; font-size: 14px;">
+                These recipes are open source - feel free to brew, modify, and share!
+            </p>
+        </footer>
+    </div>
+</body>
+</html>

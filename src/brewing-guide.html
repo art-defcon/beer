@@ -1,0 +1,1914 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Complete Homebrewing Guide</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #1a1a1a;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            height: 100vh;
+        }
+        
+        .presentation-container {
+            width: 100vw;
+            height: calc(100vh - 70px);
+            position: relative;
+        }
+        
+        .slide {
+            width: 100%;
+            height: 100%;
+            position: absolute;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            padding: 40px;
+            padding-bottom: 20px;
+            opacity: 0;
+            transform: translateX(100%);
+            transition: opacity 0.5s ease, transform 0.5s ease;
+        }
+        
+        .slide.active {
+            opacity: 1;
+            transform: translateX(0);
+        }
+        
+        .slide.prev {
+            transform: translateX(-100%);
+        }
+        
+        .slide-content {
+            max-width: 1200px;
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+            max-height: calc(100vh - 150px);
+            overflow-y: auto;
+        }
+        
+        .navigation {
+            position: relative;
+            bottom: 0;
+            display: flex;
+            gap: 10px;
+            justify-content: center;
+            background: rgba(0,0,0,0.9);
+            padding: 15px 25px;
+            align-items: center;
+            width: 100%;
+        }
+        
+        .nav-btn {
+            background: #3498db;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 25px;
+            cursor: pointer;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+        
+        .nav-btn:hover {
+            background: #2980b9;
+            transform: scale(1.05);
+        }
+        
+        .nav-btn:disabled {
+            background: #7f8c8d;
+            cursor: not-allowed;
+            transform: scale(1);
+        }
+        
+        .slide-indicator {
+            color: white;
+            font-size: 14px;
+            margin: 0 10px;
+        }
+        
+        .dots {
+            display: flex;
+            gap: 8px;
+            margin: 0 10px;
+        }
+        
+        .dot {
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            background: rgba(255,255,255,0.3);
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+        
+        .dot.active {
+            background: white;
+            transform: scale(1.2);
+        }
+        
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+            margin-bottom: 20px;
+            font-size: 2.5em;
+        }
+        
+        h2 {
+            color: #34495e;
+            margin-bottom: 20px;
+            font-size: 2em;
+        }
+        
+        h3 {
+            color: #34495e;
+            margin: 20px 0 10px 0;
+        }
+        
+        .process-step {
+            background: #f8f9fa;
+            border-left: 4px solid #3498db;
+            padding: 20px;
+            margin: 20px 0;
+            border-radius: 8px;
+        }
+        
+        .tip-box {
+            background: #e8f4f8;
+            border: 1px solid #3498db;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .warning-box {
+            background: #fee;
+            border: 1px solid #e74c3c;
+            border-radius: 8px;
+            padding: 15px;
+            margin: 15px 0;
+        }
+        
+        .equipment-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 20px;
+            margin: 20px 0;
+        }
+        
+        .equipment-item {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            text-align: center;
+            transition: transform 0.3s ease;
+        }
+        
+        .equipment-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 5px 15px rgba(0,0,0,0.1);
+        }
+        
+        .equipment-essential {
+            border: 2px solid #2ecc71;
+        }
+        
+        .equipment-optional {
+            border: 2px solid #f39c12;
+        }
+        
+        .brew-image {
+            width: 100%;
+            max-width: 600px;
+            max-height: 400px;
+            object-fit: cover;
+            object-position: center;
+            border-radius: 8px;
+            margin: 20px auto;
+            display: block;
+            box-shadow: 0 5px 15px rgba(0,0,0,0.2);
+        }
+        
+        .two-column {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 30px;
+            align-items: start;
+        }
+        
+        .recipe-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .recipe-table th {
+            background: #34495e;
+            color: white;
+            padding: 10px;
+            text-align: left;
+        }
+        
+        .recipe-table td {
+            padding: 10px;
+            border-bottom: 1px solid #ecf0f1;
+        }
+        
+        .recipe-table tr:hover {
+            background-color: #f8f9fa;
+        }
+        
+        ul {
+            margin-left: 20px;
+            margin-bottom: 15px;
+        }
+        
+        li {
+            margin-bottom: 8px;
+        }
+        
+        .icon {
+            font-size: 48px;
+            margin-bottom: 10px;
+        }
+        
+        .timeline {
+            position: relative;
+            padding: 20px 0;
+        }
+        
+        .timeline-item {
+            display: flex;
+            margin-bottom: 20px;
+            align-items: center;
+        }
+        
+        .timeline-time {
+            font-weight: bold;
+            color: #3498db;
+            min-width: 80px;
+        }
+        
+        .timeline-content {
+            background: #f8f9fa;
+            padding: 15px;
+            border-radius: 8px;
+            flex: 1;
+            margin-left: 20px;
+        }
+        
+        @media (max-width: 768px) {
+            .slide-content {
+                padding: 20px;
+            }
+            
+            h1 {
+                font-size: 1.8em;
+            }
+            
+            .two-column {
+                grid-template-columns: 1fr;
+            }
+            
+            .equipment-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="presentation-container">
+        <!-- Slide 1: Title Slide -->
+        <div class="slide active">
+            <div class="slide-content" style="text-align: center;">
+                <h1 style="font-size: 3em; margin-bottom: 30px;">The Complete Homebrewing Guide</h1>
+                <p style="font-size: 1.5em; color: #7f8c8d; margin-bottom: 40px;">From Grain to Glass</p>
+                <img src="img/ipa_beer_glass_tapped_foamy_cloudy.jpeg" alt="Fresh beer in glass" class="brew-image" style="max-width: 400px;">
+                <p style="font-size: 1.2em; margin-top: 30px;">Your journey to brewing exceptional beer at home starts here!</p>
+                <div class="tip-box" style="margin-top: 30px;">
+                    <strong>📱 Recipe Software:</strong> Download Brewfather or BeerSmith to access thousands of recipes. All timings and temperatures in this guide are examples - always follow your specific recipe!
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 2: Why Homebrew -->
+        <div class="slide">
+            <div class="slide-content">
+                <h1>Why Homebrew?</h1>
+                <div class="two-column">
+                    <div>
+                        <h3>Benefits of Homebrewing</h3>
+                        <ul>
+                            <li><strong>Creative Control:</strong> Design your own recipes and experiment with flavors</li>
+                            <li><strong>Cost Effective:</strong> After initial investment, beer costs €0.50-€1.00 per bottle</li>
+                            <li><strong>Quality:</strong> Fresh beer without preservatives or pasteurization</li>
+                            <li><strong>Community:</strong> Join a passionate community of brewers</li>
+                            <li><strong>Satisfaction:</strong> Nothing beats sharing beer you made yourself</li>
+                        </ul>
+                        
+                        <div class="tip-box">
+                            <strong>💡 Pro Tip:</strong> Start with extract kits before moving to all-grain brewing. It's easier to learn the basics without worrying about mashing efficiency.
+                        </div>
+                    </div>
+                    <div>
+                        <img src="img/nepa_glass_beer_foamy.jpeg" alt="NEPA beer" class="brew-image">
+                        <p style="text-align: center; margin-top: 10px;"><em>A homemade New England Pale Ale</em></p>
+                    </div>
+                </div>
+                
+                <h3>Getting Started: What You'll Need</h3>
+                <div class="equipment-grid">
+                    <div class="equipment-item equipment-essential">
+                        <div class="icon">🍺</div>
+                        <strong>Fermenter</strong>
+                        <p>20-30L capacity (pressure capable recommended)</p>
+                    </div>
+                    <div class="equipment-item equipment-essential">
+                        <div class="icon">🌡️</div>
+                        <strong>Thermometer</strong>
+                        <p>Digital preferred</p>
+                    </div>
+                    <div class="equipment-item equipment-essential">
+                        <div class="icon">📏</div>
+                        <strong>Hydrometer</strong>
+                        <p>Measure alcohol content</p>
+                    </div>
+                    <div class="equipment-item equipment-optional">
+                        <div class="icon">🔧</div>
+                        <strong>Wort Chiller</strong>
+                        <p>Speed up cooling</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 3: Sanitization -->
+        <div class="slide">
+            <div class="slide-content">
+                <h1>Sanitization: The Foundation of Good Beer</h1>
+                
+                <div class="warning-box" style="text-align: center; margin-bottom: 30px;">
+                    <strong>⚠️ CRITICAL:</strong> Poor sanitization is the #1 cause of ruined batches. Everything that touches your beer after boiling MUST be sanitized!
+                </div>
+                
+                <div class="two-column">
+                    <div>
+                        <h3>Cleaning vs Sanitizing</h3>
+                        <div class="process-step">
+                            <strong>1. Clean First</strong>
+                            <p>Remove all visible dirt and residue with cleaner like PBW</p>
+                        </div>
+                        
+                        <div class="process-step">
+                            <strong>2. Sanitize Second</strong>
+                            <p>Kill remaining microorganisms with no-rinse sanitizer</p>
+                        </div>
+                        
+                        <h3>Recommended Products</h3>
+                        <ul>
+                            <li><strong>PBW (Powdered Brewery Wash):</strong> Alkaline cleaner, removes organic deposits</li>
+                            <li><strong>StarSan:</strong> No-rinse acid sanitizer, 1-2 minutes contact time</li>
+                            <li><strong>Iodophor:</strong> No-rinse iodine sanitizer, alternative to StarSan</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <img src="img/pbw_cleaning.jpg" alt="PBW Cleaner" class="brew-image">
+                        <p style="text-align: center; margin-top: 10px;"><em>PBW - The brewer's best friend for cleaning</em></p>
+                        
+                        <div class="tip-box">
+                            <strong>🧤 Safety Tips:</strong>
+                            <ul>
+                                <li>Always wear gloves when handling cleaners</li>
+                                <li>PBW is alkaline - avoid skin/eye contact</li>
+                                <li>Work in well-ventilated area</li>
+                                <li>Follow manufacturer's dilution rates</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>Sanitization Checklist</h3>
+                <table class="recipe-table">
+                    <tr>
+                        <th>Equipment</th>
+                        <th>When to Sanitize</th>
+                        <th>Method</th>
+                    </tr>
+                    <tr>
+                        <td>Fermenter & Lid</td>
+                        <td>Before filling</td>
+                        <td>Fill with sanitizer solution, shake, drain</td>
+                    </tr>
+                    <tr>
+                        <td>Airlock</td>
+                        <td>Before use</td>
+                        <td>Soak in sanitizer</td>
+                    </tr>
+                    <tr>
+                        <td>Siphon/Tubing</td>
+                        <td>Before each transfer</td>
+                        <td>Run sanitizer through</td>
+                    </tr>
+                    <tr>
+                        <td>Bottles/Kegs</td>
+                        <td>Before filling</td>
+                        <td>Rinse with sanitizer</td>
+                    </tr>
+                    <tr>
+                        <td>Stirring Spoon</td>
+                        <td>Before use post-boil</td>
+                        <td>Dip in sanitizer</td>
+                    </tr>
+                </table>
+                
+                <div class="warning-box" style="margin-top: 20px;">
+                    <strong>🚨 PRO TIP - Keep a Spray Bottle:</strong>
+                    <ul>
+                        <li>Save sanitizer solution in a spray bottle after mixing</li>
+                        <li>Spray ALL surfaces before opening fermenters or kegs</li>
+                        <li>Spray keg posts, connectors, and lids before use</li>
+                        <li>Always wear gloves when handling sanitized equipment</li>
+                        <li>This prevents bacteria contamination - a common beginner mistake!</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 4: Brewing Terminology -->
+        <div class="slide">
+            <div class="slide-content">
+                <h1>Understanding Brewing Terms</h1>
+                
+                <div class="tip-box" style="text-align: center; margin-bottom: 30px;">
+                    <strong>📚 Master these terms:</strong> Understanding these measurements helps you follow recipes, troubleshoot problems, and design your own beers!
+                </div>
+                
+                <div class="two-column">
+                    <div>
+                        <h3>Gravity & Alcohol</h3>
+                        <div class="process-step">
+                            <strong>OG (Original Gravity)</strong>
+                            <ul>
+                                <li>Sugar density before fermentation</li>
+                                <li>Example: 1.050 = 50 gravity points</li>
+                                <li>Higher OG = more potential alcohol</li>
+                                <li>Typical range: 1.035-1.120</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="process-step">
+                            <strong>FG (Final Gravity)</strong>
+                            <ul>
+                                <li>Sugar density after fermentation</li>
+                                <li>Example: 1.010 = 10 gravity points</li>
+                                <li>Lower FG = drier beer</li>
+                                <li>Typical range: 1.005-1.025</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="process-step">
+                            <strong>ABV (Alcohol By Volume)</strong>
+                            <ul>
+                                <li>Percentage of alcohol in beer</li>
+                                <li>Formula: (OG - FG) × 131.25</li>
+                                <li>Example: (1.050 - 1.010) × 131.25 = 5.25%</li>
+                                <li>Typical range: 3-12%</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div>
+                        <h3>Bitterness & Color</h3>
+                        <div class="process-step">
+                            <strong>IBU (International Bitterness Units)</strong>
+                            <ul>
+                                <li>Measured hop bitterness</li>
+                                <li>5-20: Low (Wheat beers)</li>
+                                <li>20-40: Moderate (Lagers, Pale Ales)</li>
+                                <li>40-80: High (IPAs)</li>
+                                <li>80+: Very High (Double IPAs)</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="process-step">
+                            <strong>SRM (Standard Reference Method)</strong>
+                            <ul>
+                                <li>Beer color measurement</li>
+                                <li>2-4: Pale straw (Pilsner)</li>
+                                <li>5-10: Gold (Pale Ale)</li>
+                                <li>10-20: Amber (Brown Ale)</li>
+                                <li>20-40: Dark brown (Porter)</li>
+                                <li>40+: Black (Stout)</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="process-step">
+                            <strong>BU:GU Ratio</strong>
+                            <ul>
+                                <li>Balance between bitterness and sweetness</li>
+                                <li>Formula: IBU ÷ (OG points)</li>
+                                <li>Example: 40 IBU ÷ 50 points = 0.8</li>
+                                <li>0.3-0.5: Malty/Sweet</li>
+                                <li>0.5-0.7: Balanced</li>
+                                <li>0.7-1.0: Hoppy/Bitter</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>Quick Reference Examples</h3>
+                <table class="recipe-table">
+                    <tr>
+                        <th>Beer Style</th>
+                        <th>OG</th>
+                        <th>FG</th>
+                        <th>ABV</th>
+                        <th>IBU</th>
+                        <th>SRM</th>
+                        <th>BU:GU</th>
+                    </tr>
+                    <tr>
+                        <td>Light Lager</td>
+                        <td>1.040</td>
+                        <td>1.008</td>
+                        <td>4.2%</td>
+                        <td>12</td>
+                        <td>3</td>
+                        <td>0.3</td>
+                    </tr>
+                    <tr>
+                        <td>Pale Ale</td>
+                        <td>1.050</td>
+                        <td>1.012</td>
+                        <td>5.0%</td>
+                        <td>35</td>
+                        <td>8</td>
+                        <td>0.7</td>
+                    </tr>
+                    <tr>
+                        <td>IPA</td>
+                        <td>1.065</td>
+                        <td>1.015</td>
+                        <td>6.6%</td>
+                        <td>60</td>
+                        <td>10</td>
+                        <td>0.92</td>
+                    </tr>
+                    <tr>
+                        <td>Stout</td>
+                        <td>1.055</td>
+                        <td>1.018</td>
+                        <td>4.9%</td>
+                        <td>30</td>
+                        <td>35</td>
+                        <td>0.55</td>
+                    </tr>
+                </table>
+                
+                <div class="tip-box">
+                    <strong>💡 Pro Tip:</strong> Use these measurements to clone commercial beers or create your own recipes. Start with proven ratios and adjust to taste!
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 5: Recommended Kegging Equipment -->
+        <div class="slide">
+            <div class="slide-content">
+                <h1>Recommended Kegging Equipment</h1>
+                
+                <div class="two-column">
+                    <div>
+                        <h3>My Recommended Keg Setup</h3>
+                        <table class="recipe-table">
+                            <tr>
+                                <th>Item</th>
+                                <th>Cost</th>
+                                <th>Purpose</th>
+                            </tr>
+                            <tr>
+                                <td>Pressure Fermenter</td>
+                                <td>€100-200</td>
+                                <td>Ferment under pressure (recommended)</td>
+                            </tr>
+                            <tr>
+                                <td>Spunding Valve</td>
+                                <td>€20-40</td>
+                                <td>Control fermentation pressure</td>
+                            </tr>
+                            <tr>
+                                <td>Brew Kettle (20+ L)</td>
+                                <td>€40-100</td>
+                                <td>Boiling wort</td>
+                            </tr>
+                            <tr>
+                                <td>Digital Thermometer</td>
+                                <td>€10-20</td>
+                                <td>Temperature control</td>
+                            </tr>
+                            <tr>
+                                <td>Hydrometer</td>
+                                <td>€10-15</td>
+                                <td>Measure gravity</td>
+                            </tr>
+                            <tr>
+                                <td>Auto-siphon</td>
+                                <td>€10-15</td>
+                                <td>Transfer beer</td>
+                            </tr>
+                            <tr>
+                                <td>Kegging System</td>
+                                <td>€200-400</td>
+                                <td>Skip bottling entirely</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div>
+                        <img src="img/gen3_FermZilla.jpeg" alt="FermZilla Fermenter" class="brew-image">
+                        <p style="text-align: center; margin-top: 10px;"><em>FermZilla - Perfect for pressure fermentation</em></p>
+                        
+                        <div class="tip-box">
+                            <strong>💰 Budget Tip:</strong> Start with a pressure-capable fermenter like FermZilla. It costs more initially but saves money by eliminating bottling and reducing oxidation.
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>Why Pressure Fermentation?</h3>
+                <div class="process-step">
+                    <strong>Benefits for Beginners:</strong>
+                    <ul>
+                        <li><strong>Temperature Flexibility:</strong> Ferment ales at up to 25°C without off-flavors</li>
+                        <li><strong>Faster Turnaround:</strong> Beer ready in 10-14 days vs 3-4 weeks</li>
+                        <li><strong>Natural Carbonation:</strong> No priming sugar needed</li>
+                        <li><strong>Reduced Oxidation:</strong> Closed transfers preserve hop aroma</li>
+                        <li><strong>Suppress Esters:</strong> Cleaner flavor profile, more forgiving</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 6: The Brewing Process Overview -->
+        <div class="slide">
+            <div class="slide-content">
+                <h1>The Brewing Process: Overview</h1>
+                
+                <div class="timeline">
+                    <div class="timeline-item">
+                        <div class="timeline-time">Day 1</div>
+                        <div class="timeline-content">
+                            <strong>Brew Day (4-6 hours)</strong>
+                            <p>Mashing, Boiling, Cooling, Pitching Yeast</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-time">Days 1-10</div>
+                        <div class="timeline-content">
+                            <strong>Pressure Fermentation</strong>
+                            <p>Yeast converts sugars at 10-15 PSI</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-time">Day 10-12</div>
+                        <div class="timeline-content">
+                            <strong>Cold Crash</strong>
+                            <p>Drop to 2°C to clear beer</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-time">Day 12-14</div>
+                        <div class="timeline-content">
+                            <strong>Transfer to Keg</strong>
+                            <p>Closed transfer under pressure</p>
+                        </div>
+                    </div>
+                    <div class="timeline-item">
+                        <div class="timeline-time">Day 14+</div>
+                        <div class="timeline-content">
+                            <strong>Enjoy!</strong>
+                            <p>Your beer is ready to drink</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <h2>The Four Main Ingredients</h2>
+                <div class="equipment-grid">
+                    <div class="equipment-item">
+                        <div class="icon">🌾</div>
+                        <strong>Malted Grain</strong>
+                        <p>Provides fermentable sugars, color, and flavor</p>
+                    </div>
+                    <div class="equipment-item">
+                        <div class="icon">🌿</div>
+                        <strong>Hops</strong>
+                        <p>Adds bitterness, flavor, and aroma</p>
+                    </div>
+                    <div class="equipment-item">
+                        <div class="icon">🦠</div>
+                        <strong>Yeast</strong>
+                        <p>Converts sugars into alcohol and CO2</p>
+                    </div>
+                    <div class="equipment-item">
+                        <div class="icon">💧</div>
+                        <strong>Water</strong>
+                        <p>Makes up 90-95% of your beer</p>
+                    </div>
+                </div>
+                
+                <div class="tip-box">
+                    <strong>🎯 Success Tip:</strong> With pressure fermentation, you can ferment most ales at 20-22°C without off-flavors. The pressure suppresses ester formation!
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 7: Mash Temperature Control -->
+        <div class="slide">
+            <div class="slide-content">
+                <h1>Mash Temperature: The Key to Beer Character</h1>
+                
+                <div class="warning-box" style="text-align: center; margin-bottom: 30px;">
+                    <strong>🌡️ CRITICAL:</strong> Mash temperature determines your beer's body, sweetness, and alcohol content. Even 2°C difference changes everything!
+                </div>
+                
+                <div class="two-column">
+                    <div>
+                        <h3>The Critical Enzymes</h3>
+                        <table class="recipe-table" style="font-size: 14px;">
+                            <tr>
+                                <th>Enzyme</th>
+                                <th>Optimal °C</th>
+                                <th>Function</th>
+                            </tr>
+                            <tr>
+                                <td><strong>Phytase</strong></td>
+                                <td>35-52°C</td>
+                                <td>Lowers mash pH</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Protease</strong></td>
+                                <td>45-55°C</td>
+                                <td>Breaks down proteins</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Beta-Glucanase</strong></td>
+                                <td>45-50°C</td>
+                                <td>Reduces viscosity</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Beta-Amylase</strong></td>
+                                <td>60-65°C</td>
+                                <td>Makes fermentable sugars (maltose)</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Alpha-Amylase</strong></td>
+                                <td>68-72°C</td>
+                                <td>Makes unfermentable sugars (dextrins)</td>
+                            </tr>
+                        </table>
+                        
+                        <h3>What Happens Outside the Range?</h3>
+                        <div class="warning-box" style="font-size: 14px;">
+                            <strong>Too Low (&lt;60°C):</strong>
+                            <ul style="margin: 5px 0;">
+                                <li>Poor starch conversion</li>
+                                <li>Cloudy beer (unconverted starch)</li>
+                                <li>Low efficiency</li>
+                                <li>Weak body</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="warning-box" style="font-size: 14px; margin-top: 10px;">
+                            <strong>Too High (&gt;73°C):</strong>
+                            <ul style="margin: 5px 0;">
+                                <li>Enzyme denaturation</li>
+                                <li>Tannin extraction</li>
+                                <li>Astringent flavors</li>
+                                <li>Stuck fermentation</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div>
+                        <img src="img/mesh_temperature.jpg" alt="Mash temperature monitoring" class="brew-image">
+                        <p style="text-align: center; margin-top: 10px;"><em>Precise temperature control is crucial</em></p>
+                        
+                        <h3>Target Temperatures by Style</h3>
+                        <table class="recipe-table" style="font-size: 14px;">
+                            <tr>
+                                <th>Temperature</th>
+                                <th>Beta:Alpha</th>
+                                <th>Result</th>
+                            </tr>
+                            <tr>
+                                <td><strong>62-63°C</strong></td>
+                                <td>High Beta</td>
+                                <td>90% fermentable, bone dry</td>
+                            </tr>
+                            <tr>
+                                <td><strong>64-65°C</strong></td>
+                                <td>Beta favored</td>
+                                <td>80% fermentable, crisp</td>
+                            </tr>
+                            <tr>
+                                <td><strong>66-67°C</strong></td>
+                                <td>Balanced</td>
+                                <td>70% fermentable, medium body</td>
+                            </tr>
+                            <tr>
+                                <td><strong>68-69°C</strong></td>
+                                <td>Alpha favored</td>
+                                <td>60% fermentable, full body</td>
+                            </tr>
+                            <tr>
+                                <td><strong>70-72°C</strong></td>
+                                <td>High Alpha</td>
+                                <td>50% fermentable, sweet/heavy</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                
+                <h3>Enzyme Behavior in Detail</h3>
+                <div class="process-step">
+                    <strong>Beta-Amylase (The Fermentability Enzyme):</strong>
+                    <ul>
+                        <li><strong>Optimal: 62-65°C</strong> - Produces maltose (fermentable sugar)</li>
+                        <li><strong>Below 60°C:</strong> Works slowly, poor efficiency, may take 2+ hours</li>
+                        <li><strong>Above 65°C:</strong> Rapidly denatures, less fermentable wort, sweeter beer</li>
+                        <li><strong>Death: 70°C</strong> - Complete denaturation in minutes</li>
+                    </ul>
+                </div>
+                
+                <div class="process-step">
+                    <strong>Alpha-Amylase (The Body Builder):</strong>
+                    <ul>
+                        <li><strong>Optimal: 68-72°C</strong> - Creates dextrins (unfermentable sugars) for body</li>
+                        <li><strong>Below 65°C:</strong> Limited activity, thin beer</li>
+                        <li><strong>Above 75°C:</strong> Begins to denature, but more stable than beta</li>
+                        <li><strong>Death: 80°C</strong> - Complete denaturation</li>
+                    </ul>
+                </div>
+                
+                <div class="tip-box">
+                    <strong>💡 Temperature Strategy:</strong> For dry beer, start at 63°C. For balanced beer, use 67°C. For sweet/full beer, mash at 69°C. Hold temperature ±1°C for 60 minutes for complete conversion.
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 8: Temperature Control Methods -->
+        <div class="slide">
+            <div class="slide-content">
+                <h1>Temperature Control Methods</h1>
+                
+                <div class="two-column">
+                    <div>
+                        <h3>Why Temperature Control Matters</h3>
+                        <p>Precise temperature control during mashing is critical for:</p>
+                        <ul>
+                            <li>Consistent enzyme activity</li>
+                            <li>Predictable fermentability</li>
+                            <li>Reproducible results</li>
+                            <li>Style-appropriate body and sweetness</li>
+                        </ul>
+                        
+                        <h3>Control Methods Compared</h3>
+                        <table class="recipe-table">
+                            <tr>
+                                <th>Method</th>
+                                <th>Cost</th>
+                                <th>Accuracy</th>
+                            </tr>
+                            <tr>
+                                <td>Cooler Mash Tun</td>
+                                <td>€30-50</td>
+                                <td>±2°C</td>
+                            </tr>
+                            <tr>
+                                <td>Electric BIAB</td>
+                                <td>€200-400</td>
+                                <td>±1°C</td>
+                            </tr>
+                            <tr>
+                                <td>Sous Vide</td>
+                                <td>€50-100</td>
+                                <td>±0.1°C</td>
+                            </tr>
+                            <tr>
+                                <td>HERMS/RIMS</td>
+                                <td>€500+</td>
+                                <td>±0.5°C</td>
+                            </tr>
+                        </table>
+                    </div>
+                    <div>
+                        <img src="img/mesh_with_sous_vide.jpeg" alt="Sous vide temperature control" class="brew-image">
+                        <p style="text-align: center; margin-top: 10px;"><em>Sous vide provides laboratory-grade temperature control</em></p>
+                        
+                        <div class="tip-box" style="margin-top: 20px;">
+                            <strong>🌡️ Sous Vide Advantages:</strong>
+                            <ul>
+                                <li>No stirring required</li>
+                                <li>Perfect for small batches</li>
+                                <li>Multi-step mashes easy</li>
+                                <li>Use existing kitchen equipment</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>Temperature Control Options</h3>
+                <div class="equipment-grid">
+                    <div class="equipment-item">
+                        <strong>Cooler Mash Tun</strong>
+                        <ul style="text-align: left; font-size: 14px;">
+                            <li>Pros: Cheap, simple, no power</li>
+                            <li>Cons: Temperature drops over time</li>
+                            <li>Best for: Single infusion mashes</li>
+                            <li>Tip: Pre-heat with boiling water</li>
+                        </ul>
+                    </div>
+                    <div class="equipment-item">
+                        <strong>Sous Vide Circulator</strong>
+                        <ul style="text-align: left; font-size: 14px;">
+                            <li>Pros: Precise, affordable, versatile</li>
+                            <li>Cons: Limited batch size</li>
+                            <li>Best for: BIAB, small batches</li>
+                            <li>Tip: Use brew bag to contain grain</li>
+                        </ul>
+                    </div>
+                    <div class="equipment-item">
+                        <strong>Electric Systems</strong>
+                        <ul style="text-align: left; font-size: 14px;">
+                            <li>Pros: All-in-one, programmable</li>
+                            <li>Cons: Expensive initial cost</li>
+                            <li>Best for: Serious brewers</li>
+                            <li>Tip: Consider used equipment</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="warning-box">
+                    <strong>⚠️ Temperature Probe Placement:</strong> Always place temperature probe in the center of the mash, away from heat sources. Stir before taking readings for accuracy.
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 9: Mashing and Sparging -->
+        <div class="slide">
+            <div class="slide-content">
+                <h1>Step 1: Mashing & Sparging</h1>
+                
+                <div class="two-column">
+                    <div>
+                        <h3>The Mashing Process</h3>
+                        <p>Mashing converts starches in grain into fermentable sugars.</p>
+                        
+                        <div class="process-step">
+                            <strong>1. Heat Strike Water</strong>
+                            <p>Heat water to 10-15°C above target mash temp (usually 74-78°C)</p>
+                        </div>
+                        
+                        <div class="process-step">
+                            <strong>2. Add Grain</strong>
+                            <p>Slowly add crushed grain while stirring to avoid clumps</p>
+                        </div>
+                        
+                        <div class="process-step">
+                            <strong>3. Maintain Temperature</strong>
+                            <p>Hold at your recipe's mash temp for 60 minutes</p>
+                        </div>
+                        
+                        <div class="process-step">
+                            <strong>4. Sparge</strong>
+                            <p>Rinse grains with 77°C water to extract remaining sugars</p>
+                        </div>
+                    </div>
+                    <div>
+                        <img src="img/mesh_with_sous_vide.jpeg" alt="Mashing with sous vide" class="brew-image">
+                        <p style="text-align: center; margin-top: 10px;"><em>Sous vide circulator for perfect temperature control</em></p>
+                        
+                        <img src="img/homemade_cooler.jpeg" alt="DIY mash tun" class="brew-image" style="margin-top: 20px;">
+                        <p style="text-align: center; margin-top: 10px;"><em>A DIY cooler mash tun - simple but effective</em></p>
+                    </div>
+                </div>
+                
+                <h3>Mashing Tips & Tricks</h3>
+                <div class="tip-box">
+                    <strong>🌡️ Sous Vide Method:</strong> Place grain bag in pot, clip sous vide to side, set temperature. No stirring needed, perfect temp control!
+                </div>
+                
+                <div class="tip-box">
+                    <strong>🌾 Grain Crush:</strong> Proper crush is crucial. Too fine = stuck sparge, too coarse = poor efficiency. Aim for cracked husks with exposed starchy interior.
+                </div>
+                
+                <div class="warning-box">
+                    <strong>⚠️ Don't Over-Sparge:</strong> Stop collecting wort when gravity drops below 1.010 or pH rises above 6.0 to avoid tannin extraction.
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 10: Boiling and Hop Additions -->
+        <div class="slide">
+            <div class="slide-content">
+                <h1>Step 2: The Boil</h1>
+                
+                <div class="two-column">
+                    <div>
+                        <img src="img/pot_heating_pre_boil.jpeg" alt="Heating wort" class="brew-image">
+                        <p style="text-align: center; margin-top: 10px;"><em>Bringing wort to a boil</em></p>
+                        
+                        <img src="img/pot_end_of_boil_added_hops.jpeg" alt="End of boil with hops" class="brew-image" style="margin-top: 20px;">
+                        <p style="text-align: center; margin-top: 10px;"><em>Late hop additions for flavor and aroma</em></p>
+                    </div>
+                    <div>
+                        <h3>Why We Boil</h3>
+                        <ul>
+                            <li>Sterilize the wort</li>
+                            <li>Extract hop bitterness</li>
+                            <li>Drive off DMS (cooked corn flavor)</li>
+                            <li>Concentrate the wort</li>
+                            <li>Create hot break (protein coagulation)</li>
+                        </ul>
+                        
+                        <div class="warning-box" style="margin-bottom: 20px;">
+                            <strong>⏱️ CRITICAL TIMING CLARIFICATION:</strong><br>
+                            Hop times = MINUTES REMAINING in the boil, NOT minutes elapsed!<br>
+                            • "60 min" = Add at START of 60-minute boil<br>
+                            • "15 min" = Add with 15 minutes LEFT (after 45 min of boiling)<br>
+                            • "5 min" = Add with 5 minutes LEFT (after 55 min of boiling)<br>
+                            • "0 min" = Add at flameout (heat OFF)<br>
+                            <span style="color: #e74c3c;">Getting this wrong ruins your beer's flavor balance!</span>
+                        </div>
+                        
+                        <h3>Hop Addition Schedule</h3>
+                        <table class="recipe-table">
+                            <tr>
+                                <th>Recipe Says</th>
+                                <th>When to Add</th>
+                                <th>Purpose</th>
+                                <th>Effect</th>
+                            </tr>
+                            <tr>
+                                <td><strong>60 min</strong></td>
+                                <td>Start of boil</td>
+                                <td>Bittering</td>
+                                <td>Clean bitterness, no flavor</td>
+                            </tr>
+                            <tr>
+                                <td><strong>20-30 min</strong></td>
+                                <td>30-40 min into boil</td>
+                                <td>Flavor</td>
+                                <td>Hop flavor, some bitterness</td>
+                            </tr>
+                            <tr>
+                                <td><strong>5-10 min</strong></td>
+                                <td>50-55 min into boil</td>
+                                <td>Aroma</td>
+                                <td>Hop aroma, little bitterness</td>
+                            </tr>
+                            <tr>
+                                <td><strong>0 min</strong></td>
+                                <td>Heat off</td>
+                                <td>Aroma</td>
+                                <td>Maximum aroma preservation</td>
+                            </tr>
+                            <tr>
+                                <td><strong>Dry Hop</strong></td>
+                                <td>During fermentation</td>
+                                <td>Aroma</td>
+                                <td>Intense hop aroma, no bitterness</td>
+                            </tr>
+                        </table>
+                        
+                        <div class="tip-box">
+                            <strong>🔥 Boil Timer Tip:</strong> Set a countdown timer for 60 minutes. Add hops when timer shows the time listed in recipe. Most brewing apps have built-in hop timers with alarms!
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>Critical Boil Tips</h3>
+                <div class="warning-box">
+                    <strong>⚠️ Hot Side Aeration:</strong> Avoid splashing hot wort (above 27°C). Oxygen + hot wort = stale flavors later.
+                </div>
+                
+                <div class="tip-box">
+                    <strong>💡 Whirlpool:</strong> After boil, stir wort in a circle and let settle 10-15 min. Trub and hops will collect in center for cleaner transfer.
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 11: Fresh Hops and Ingredients -->
+        <div class="slide">
+            <div class="slide-content">
+                <h1>Working with Fresh Ingredients</h1>
+                
+                <div class="two-column">
+                    <div>
+                        <h3>Fresh Hops</h3>
+                        <img src="img/fresh_hops.jpeg" alt="Fresh hops" class="brew-image">
+                        <p style="text-align: center; margin-top: 10px;"><em>Fresh hops straight from the vine</em></p>
+                        
+                        <div class="tip-box" style="margin-top: 20px;">
+                            <strong>🌿 Fresh Hop Usage:</strong> Use 5-6x more fresh hops than dried. Fresh hops are ~80% water vs ~10% for dried. Best used within 24 hours of harvest.
+                        </div>
+                    </div>
+                    <div>
+                        <h3>Hop Drying & Storage</h3>
+                        <img src="img/fresh_hops_drying.jpeg" alt="Drying hops" class="brew-image">
+                        <p style="text-align: center; margin-top: 10px;"><em>Air-drying fresh hops</em></p>
+                        
+                        <div class="process-step" style="margin-top: 20px;">
+                            <strong>Drying Fresh Hops:</strong>
+                            <ul>
+                                <li>Spread in single layer on screens</li>
+                                <li>Dry in warm (not hot) area with good airflow</li>
+                                <li>Takes 2-3 days until papery and springs back</li>
+                                <li>Store vacuum sealed in freezer</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>Measuring and Using Hops</h3>
+                <div class="two-column">
+                    <div>
+                        <img src="img/measure_hops.jpeg" alt="Measuring hops" class="brew-image">
+                        <p style="text-align: center; margin-top: 10px;"><em>Precise hop measurements matter</em></p>
+                    </div>
+                    <div>
+                        <h4>Hop Storage Tips:</h4>
+                        <ul>
+                            <li>Keep hops frozen in airtight bags</li>
+                            <li>Minimize air exposure (vacuum seal if possible)</li>
+                            <li>Use within 1 year for best quality</li>
+                            <li>Old hops lose alpha acids and develop cheesy flavors</li>
+                        </ul>
+                        
+                        <div class="warning-box">
+                            <strong>⚠️ Alpha Acid Degradation:</strong> Hops lose 50% of alpha acids in 6 months at room temp. Always adjust recipes for actual alpha acid content.
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 12: Grain Handling -->
+        <div class="slide">
+            <div class="slide-content">
+                <h1>Grain Preparation</h1>
+                
+                <div class="two-column">
+                    <div>
+                        <h3>Measuring Grain</h3>
+                        <img src="img/measure_grains.jpeg" alt="Measuring grains" class="brew-image">
+                        <p style="text-align: center; margin-top: 10px;"><em>Accurate grain measurements ensure consistency</em></p>
+                        
+                        <div class="tip-box" style="margin-top: 20px;">
+                            <strong>📏 Measurement Tip:</strong> Weigh grain, don't measure by volume. Grain density varies significantly between types and crushes.
+                        </div>
+                    </div>
+                    <div>
+                        <h3>Crushing Grain</h3>
+                        <img src="img/grinding_grain.jpeg" alt="Grinding grain" class="brew-image">
+                        <p style="text-align: center; margin-top: 10px;"><em>Proper crush exposes starch without shredding husks</em></p>
+                        
+                        <div class="process-step" style="margin-top: 20px;">
+                            <strong>Optimal Crush Settings:</strong>
+                            <ul>
+                                <li>Gap: 0.9-1.1mm for most systems</li>
+                                <li>Husks cracked but not shredded</li>
+                                <li>White starchy interior exposed</li>
+                                <li>Minimal flour production</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>Common Grain Types</h3>
+                <table class="recipe-table">
+                    <tr>
+                        <th>Grain</th>
+                        <th>Purpose</th>
+                        <th>Max %</th>
+                        <th>Notes</th>
+                    </tr>
+                    <tr>
+                        <td>2-Row Pale</td>
+                        <td>Base malt</td>
+                        <td>100%</td>
+                        <td>Clean, light flavor</td>
+                    </tr>
+                    <tr>
+                        <td>Munich</td>
+                        <td>Malty flavor</td>
+                        <td>50%</td>
+                        <td>Bread, toast notes</td>
+                    </tr>
+                    <tr>
+                        <td>Crystal/Caramel</td>
+                        <td>Sweetness, body</td>
+                        <td>15%</td>
+                        <td>Caramel flavors</td>
+                    </tr>
+                    <tr>
+                        <td>Roasted Barley</td>
+                        <td>Color, roast</td>
+                        <td>10%</td>
+                        <td>Coffee, chocolate</td>
+                    </tr>
+                    <tr>
+                        <td>Wheat</td>
+                        <td>Head, haze</td>
+                        <td>60%</td>
+                        <td>Smooth mouthfeel</td>
+                    </tr>
+                </table>
+                
+                <div class="tip-box">
+                    <strong>💡 Freshness Matters:</strong> Buy pre-crushed grain only if using within 2-3 weeks. Crushed grain goes stale quickly and loses diastatic power.
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 13: Pressure Fermentation -->
+        <div class="slide">
+            <div class="slide-content">
+                <h1>Step 3: Pressure Fermentation</h1>
+                
+                <div class="two-column">
+                    <div>
+                        <h3>Why Pressure Ferment?</h3>
+                        <div class="equipment-item equipment-essential">
+                            <strong>Game-Changing Benefits:</strong>
+                            <ul style="text-align: left;">
+                                <li>Ferment lagers at ale temps (18-22°C)</li>
+                                <li>Suppress unwanted esters</li>
+                                <li>Natural carbonation during fermentation</li>
+                                <li>Faster grain to glass (10-14 days)</li>
+                                <li>No temperature control needed</li>
+                                <li>Closed transfers = no oxidation</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="process-step">
+                            <strong>Pressure Schedule:</strong>
+                            <ul>
+                                <li>Days 1-2: Ferment at 0 PSI (let CO2 escape)</li>
+                                <li>Day 3: Set spunding valve to 10-15 PSI</li>
+                                <li>Day 7-10: Fermentation complete</li>
+                                <li>Day 10-12: Cold crash to 2°C</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div>
+                        <img src="img/fermenting_valve_building_preasure.jpeg" alt="Active fermentation" class="brew-image">
+                        <p style="text-align: center; margin-top: 10px;"><em>Spunding valve controlling fermentation pressure</em></p>
+                        
+                        <h3>Pressure Fermentation Tips</h3>
+                        <div class="tip-box">
+                            <strong>🎯 Temperature Freedom:</strong> At 10-15 PSI, you can ferment most ales at 20-25°C without off-flavors. Perfect for apartments without temperature control!
+                        </div>
+                        
+                        <div class="warning-box">
+                            <strong>⚠️ Safety First:</strong> Always use pressure-rated fermenters. Never exceed manufacturer's pressure ratings (typically 35 PSI max).
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>Yeast Selection for Pressure Fermentation</h3>
+                <table class="recipe-table">
+                    <tr>
+                        <th>Style</th>
+                        <th>Yeast Strain</th>
+                        <th>Pressure</th>
+                        <th>Temperature</th>
+                    </tr>
+                    <tr>
+                        <td>Clean Ales</td>
+                        <td>US-05, M44</td>
+                        <td>10-15 PSI</td>
+                        <td>20-24°C</td>
+                    </tr>
+                    <tr>
+                        <td>Pseudo-Lagers</td>
+                        <td>W-34/70, M54</td>
+                        <td>15-20 PSI</td>
+                        <td>18-22°C</td>
+                    </tr>
+                    <tr>
+                        <td>English Ales</td>
+                        <td>S-04, M42</td>
+                        <td>5-10 PSI</td>
+                        <td>18-22°C</td>
+                    </tr>
+                    <tr>
+                        <td>NEIPA</td>
+                        <td>London Fog, A38</td>
+                        <td>5-8 PSI</td>
+                        <td>18-20°C</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Slide 14: Packaging -->
+        <div class="slide">
+            <div class="slide-content">
+                <h1>Step 4: Kegging from Pressure Fermenter</h1>
+                
+                <div class="two-column">
+                    <div>
+                        <h3>Closed Transfer Process</h3>
+                        <div class="process-step">
+                            <strong>1. Prepare Keg</strong>
+                            <ul>
+                                <li>Sanitize keg thoroughly</li>
+                                <li>Purge with CO2 (fill and push out sanitizer)</li>
+                                <li>Leave ~2 PSI in keg</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="process-step">
+                            <strong>2. Equalize Pressure</strong>
+                            <ul>
+                                <li>Connect gas post to gas post</li>
+                                <li>Connect liquid to liquid</li>
+                                <li>Fermenter pressure pushes beer</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="process-step">
+                            <strong>3. Transfer</strong>
+                            <ul>
+                                <li>No pumps or siphons needed</li>
+                                <li>Gravity + pressure does the work</li>
+                                <li>Zero oxygen exposure</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div>
+                        <img src="img/keg_brewing_equipment.jpeg" alt="Kegging equipment" class="brew-image">
+                        <p style="text-align: center; margin-top: 10px;"><em>Professional kegging setup</em></p>
+                        
+                        <img src="img/conditioning_small_keg.jpeg" alt="Small keg system" class="brew-image" style="margin-top: 20px;">
+                        <p style="text-align: center; margin-top: 10px;"><em>Even small kegs work great</em></p>
+                    </div>
+                </div>
+                
+                <div class="tip-box">
+                    <strong>💡 Already Carbonated!</strong> Since you fermented under pressure, your beer is already 70-80% carbonated. Just top up to serving pressure (8-12 PSI) and it's ready in 24 hours!
+                </div>
+                
+                <h3>Serving Pressure by Style</h3>
+                <table class="recipe-table">
+                    <tr>
+                        <th>Style</th>
+                        <th>CO2 Volumes</th>
+                        <th>PSI @ 4°C</th>
+                    </tr>
+                    <tr>
+                        <td>British Ales</td>
+                        <td>1.5-2.2</td>
+                        <td>4-8</td>
+                    </tr>
+                    <tr>
+                        <td>American Ales</td>
+                        <td>2.2-2.7</td>
+                        <td>8-12</td>
+                    </tr>
+                    <tr>
+                        <td>Lagers</td>
+                        <td>2.4-2.8</td>
+                        <td>10-13</td>
+                    </tr>
+                    <tr>
+                        <td>Wheat Beers</td>
+                        <td>2.8-3.5</td>
+                        <td>13-18</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+        
+        <!-- Slide 15: Serving and Pressure -->
+        <div class="slide">
+            <div class="slide-content">
+                <h1>Serving Your Beer</h1>
+                
+                <div class="two-column">
+                    <div>
+                        <h3>Draft System Basics</h3>
+                        <img src="img/tap_connected_on_valve.png" alt="Tap connected to keg valve" class="brew-image">
+                        <p style="text-align: center; margin-top: 10px;"><em>Proper pressure ensures perfect pours</em></p>
+                        
+                        <div class="process-step" style="margin-top: 20px;">
+                            <strong>Line Balancing:</strong>
+                            <ul>
+                                <li>4mm ID: 2-3 PSI drop per 30cm</li>
+                                <li>6mm ID: 0.5-1 PSI drop per 30cm</li>
+                                <li>Aim for 30-60mL/second pour rate</li>
+                                <li>Adjust line length for foam control</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div>
+                        <h3>Perfect Pour Tips</h3>
+                        <ul>
+                            <li>Keep beer at 3-4°C for serving</li>
+                            <li>Open tap fully and quickly</li>
+                            <li>Hold glass at 45° angle initially</li>
+                            <li>Straighten glass as it fills</li>
+                            <li>2-3cm foam head is ideal</li>
+                        </ul>
+                        
+                        <div class="tip-box">
+                            <strong>🍺 Glassware Matters:</strong> Different styles shine in different glasses. Clean glasses thoroughly - soap residue kills head retention.
+                        </div>
+                        
+                        <h3>Common Serving Issues</h3>
+                        <table class="recipe-table">
+                            <tr>
+                                <th>Problem</th>
+                                <th>Likely Cause</th>
+                                <th>Solution</th>
+                            </tr>
+                            <tr>
+                                <td>All foam</td>
+                                <td>Too warm/high pressure</td>
+                                <td>Check temp, reduce PSI</td>
+                            </tr>
+                            <tr>
+                                <td>Flat beer</td>
+                                <td>Low pressure/leak</td>
+                                <td>Check for leaks, increase PSI</td>
+                            </tr>
+                            <tr>
+                                <td>Off flavors</td>
+                                <td>Dirty lines</td>
+                                <td>Clean lines every 2 weeks</td>
+                            </tr>
+                        </table>
+                    </div>
+                </div>
+                
+                <div class="warning-box">
+                    <strong>⚠️ Line Cleaning:</strong> Clean draft lines every 2 weeks with BLC or PBW. Bacteria buildup causes off-flavors and can make you sick.
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 16: Recipe Development -->
+        <div class="slide">
+            <div class="slide-content">
+                <h1>Recipe Development & Software</h1>
+                
+                <div class="two-column">
+                    <div>
+                        <h3>Recipe Formulation Basics</h3>
+                        <div class="process-step">
+                            <strong>1. Choose Your Style</strong>
+                            <p>Start with BJCP guidelines for targets (OG, FG, IBU, SRM)</p>
+                        </div>
+                        
+                        <div class="process-step">
+                            <strong>2. Build Grain Bill</strong>
+                            <p>80-95% base malt, 5-20% specialty malts</p>
+                        </div>
+                        
+                        <div class="process-step">
+                            <strong>3. Calculate Hop Schedule</strong>
+                            <p>Balance IBUs with OG (BU:GU ratio 0.5-1.0 typical)</p>
+                        </div>
+                        
+                        <div class="process-step">
+                            <strong>4. Select Yeast</strong>
+                            <p>Match yeast character to style goals</p>
+                        </div>
+                        
+                        <div class="process-step">
+                            <strong>5. Adjust Water</strong>
+                            <p>Match water profile to style (optional for beginners)</p>
+                        </div>
+                    </div>
+                    <div>
+                        <img src="img/brewfather_app.jpeg" alt="Brewfather app" class="brew-image">
+                        <p style="text-align: center; margin-top: 10px;"><em>Brewfather app for recipe design</em></p>
+                        
+                        <h3>Popular Brewing Software</h3>
+                        <ul>
+                            <li><strong>Brewfather:</strong> Cloud-based, great mobile app, thousands of recipes</li>
+                            <li><strong>BeerSmith:</strong> Desktop powerhouse, extensive recipe database</li>
+                            <li><strong>Brewer's Friend:</strong> Web-based, good for beginners</li>
+                            <li><strong>BrewTarget:</strong> Free, open-source option</li>
+                        </ul>
+                        
+                        <div class="tip-box">
+                            <strong>📱 Get Started:</strong> Download Brewfather or BeerSmith. Browse their recipe libraries - thousands of tested recipes with exact temperatures and timings for your system!
+                        </div>
+                    </div>
+                </div>
+                
+                <h3>Key Recipe Calculations</h3>
+                <table class="recipe-table">
+                    <tr>
+                        <th>Calculation</th>
+                        <th>Formula</th>
+                        <th>Purpose</th>
+                    </tr>
+                    <tr>
+                        <td>OG Estimate</td>
+                        <td>(PPG × kg × Efficiency) / liters</td>
+                        <td>Predict starting gravity</td>
+                    </tr>
+                    <tr>
+                        <td>IBU (Tinseth)</td>
+                        <td>Complex - use software</td>
+                        <td>Bitterness calculation</td>
+                    </tr>
+                    <tr>
+                        <td>ABV</td>
+                        <td>(OG - FG) × 131.25</td>
+                        <td>Alcohol content</td>
+                    </tr>
+                    <tr>
+                        <td>BU:GU Ratio</td>
+                        <td>IBU / (OG - 1) × 1000</td>
+                        <td>Balance assessment</td>
+                    </tr>
+                </table>
+                
+                <div class="warning-box">
+                    <strong>⚠️ Remember:</strong> All temperatures and times in this guide are examples. Always follow your specific recipe from your brewing software!
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 17: Troubleshooting -->
+        <div class="slide">
+            <div class="slide-content">
+                <h1>Troubleshooting Common Problems</h1>
+                
+                <h2>Off-Flavors Guide</h2>
+                <table class="recipe-table" style="font-size: 14px;">
+                    <tr>
+                        <th>Flavor</th>
+                        <th>Description</th>
+                        <th>Cause</th>
+                        <th>Prevention</th>
+                    </tr>
+                    <tr>
+                        <td><strong>Acetaldehyde</strong></td>
+                        <td>Green apple, latex paint</td>
+                        <td>Incomplete fermentation</td>
+                        <td>Allow full fermentation, healthy yeast</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Diacetyl</strong></td>
+                        <td>Butter, butterscotch</td>
+                        <td>Yeast stress, too-cold fermentation</td>
+                        <td>Diacetyl rest at 20°C, proper temps</td>
+                    </tr>
+                    <tr>
+                        <td><strong>DMS</strong></td>
+                        <td>Cooked corn, cabbage</td>
+                        <td>Covered boil, slow cooling</td>
+                        <td>Vigorous uncovered boil, quick chill</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Phenolic</strong></td>
+                        <td>Band-aid, medicinal</td>
+                        <td>Wild yeast, chlorine</td>
+                        <td>Sanitation, remove chlorine</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Astringent</strong></td>
+                        <td>Tea-like, mouth-puckering</td>
+                        <td>Over-sparging, high pH</td>
+                        <td>Stop sparge at 1.010, check pH</td>
+                    </tr>
+                    <tr>
+                        <td><strong>Oxidation</strong></td>
+                        <td>Cardboard, sherry</td>
+                        <td>Oxygen exposure post-fermentation</td>
+                        <td>Minimize splashing, purge with CO2</td>
+                    </tr>
+                </table>
+                
+                <h3>Common Process Issues</h3>
+                <div class="two-column">
+                    <div>
+                        <div class="warning-box">
+                            <strong>Stuck Fermentation</strong>
+                            <ul>
+                                <li>Check temperature (too cold?)</li>
+                                <li>Rouse yeast gently</li>
+                                <li>Add yeast nutrient</li>
+                                <li>Pitch fresh yeast if needed</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="warning-box" style="margin-top: 15px;">
+                            <strong>Stuck Sparge</strong>
+                            <ul>
+                                <li>Grain bed too compact</li>
+                                <li>Add rice hulls (5-10%)</li>
+                                <li>Underlet with hot water</li>
+                                <li>Stir and resettle bed</li>
+                            </ul>
+                        </div>
+                    </div>
+                    <div>
+                        <div class="warning-box">
+                            <strong>Infection Signs</strong>
+                            <ul>
+                                <li>Pellicle (white film) on beer</li>
+                                <li>Rope-like strands</li>
+                                <li>Sour/funky flavors</li>
+                                <li>Over-attenuation</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="warning-box" style="margin-top: 15px;">
+                            <strong>Poor Efficiency</strong>
+                            <ul>
+                                <li>Check grain crush</li>
+                                <li>Verify mash pH (5.2-5.6)</li>
+                                <li>Ensure proper temps</li>
+                                <li>Sparge slowly (45-60 min)</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="tip-box">
+                    <strong>🔬 Keep Learning:</strong> Take detailed notes on every batch. Temperature logs, gravity readings, and tasting notes help identify patterns and improve your process.
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 18: Advanced Tips -->
+        <div class="slide">
+            <div class="slide-content">
+                <h1>Advanced Techniques & Tips</h1>
+                
+                <h2>Water Chemistry Basics</h2>
+                <div class="two-column">
+                    <div>
+                        <h3>Important Ions</h3>
+                        <table class="recipe-table">
+                            <tr>
+                                <th>Ion</th>
+                                <th>Effect</th>
+                                <th>Target (ppm)</th>
+                            </tr>
+                            <tr>
+                                <td>Calcium</td>
+                                <td>Yeast health, clarity</td>
+                                <td>50-150</td>
+                            </tr>
+                            <tr>
+                                <td>Sulfate</td>
+                                <td>Hop bitterness</td>
+                                <td>50-350</td>
+                            </tr>
+                            <tr>
+                                <td>Chloride</td>
+                                <td>Malt fullness</td>
+                                <td>50-150</td>
+                            </tr>
+                            <tr>
+                                <td>Bicarbonate</td>
+                                <td>pH buffer</td>
+                                <td>0-250</td>
+                            </tr>
+                        </table>
+                        
+                        <div class="tip-box">
+                            <strong>💧 Start Simple:</strong> Use RO water + brewing salts or adjust your tap water minimally. Focus on mash pH (5.2-5.6) first.
+                        </div>
+                    </div>
+                    <div>
+                        <h3>Style Water Profiles</h3>
+                        <ul>
+                            <li><strong>IPAs:</strong> High sulfate (200-350 ppm), sulfate:chloride 3:1</li>
+                            <li><strong>NEIPAs:</strong> Balanced or chloride-forward, 1:1 to 1:2 ratio</li>
+                            <li><strong>Stouts:</strong> Higher bicarbonate (100-200 ppm) for dark malts</li>
+                            <li><strong>Pilsners:</strong> Very soft water, minimal minerals</li>
+                        </ul>
+                        
+                        <div class="process-step">
+                            <strong>pH Adjustment:</strong>
+                            <ul>
+                                <li>Measure 5-10 min into mash</li>
+                                <li>Use lactic acid to lower</li>
+                                <li>Use baking soda to raise</li>
+                                <li>Adjust in small increments</li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+                
+                <h2>Yeast Management</h2>
+                <div class="two-column">
+                    <div>
+                        <h3>Yeast Starters</h3>
+                        <div class="process-step">
+                            <strong>When to Make Starters:</strong>
+                            <ul>
+                                <li>Liquid yeast over 2 months old</li>
+                                <li>High gravity beers (>1.060)</li>
+                                <li>Lagers (need 2x cells)</li>
+                                <li>To harvest yeast for reuse</li>
+                            </ul>
+                        </div>
+                        
+                        <div class="tip-box">
+                            <strong>🧪 Starter Recipe:</strong> 100g DME per liter of water (1.040 gravity). Use stir plate for best growth. Step up for big beers.
+                        </div>
+                    </div>
+                    <div>
+                        <h3>Temperature Control Methods</h3>
+                        <ul>
+                            <li><strong>Pressure Fermentation:</strong> No temp control needed!</li>
+                            <li><strong>Swamp Cooler:</strong> Fermenter in water bath</li>
+                            <li><strong>Fermentation Chamber:</strong> Modified fridge</li>
+                            <li><strong>Glycol System:</strong> Professional precision</li>
+                        </ul>
+                        
+                        <div class="warning-box">
+                            <strong>⚠️ Lager Tip:</strong> With pressure fermentation, make perfect lagers at 18-20°C using W-34/70 yeast at 15 PSI!
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Slide 19: Resources and Community -->
+        <div class="slide">
+            <div class="slide-content">
+                <h1>Resources & Next Steps</h1>
+                
+                <div class="two-column">
+                    <div>
+                        <h3>Online Communities</h3>
+                        <ul>
+                            <li><strong>r/Homebrewing:</strong> Active Reddit community</li>
+                            <li><strong>HomeBrewTalk:</strong> Largest forum, great recipes</li>
+                            <li><strong>The Brewing Network:</strong> Podcasts and forums</li>
+                            <li><strong>Milk The Funk:</strong> Wild/sour brewing</li>
+                        </ul>
+                        
+                        <h3>Essential Books</h3>
+                        <ul>
+                            <li><strong>How to Brew (Palmer):</strong> The homebrewing bible</li>
+                            <li><strong>Designing Great Beers (Daniels):</strong> Recipe formulation</li>
+                            <li><strong>Yeast (White & Zainasheff):</strong> Fermentation science</li>
+                            <li><strong>Water (Palmer & Kaminski):</strong> Water chemistry</li>
+                        </ul>
+                        
+                        <h3>YouTube Channels</h3>
+                        <ul>
+                            <li>Clawhammer Supply</li>
+                            <li>The Homebrew Challenge</li>
+                            <li>David Heath Homebrew</li>
+                            <li>Short Circuited Brewers</li>
+                        </ul>
+                    </div>
+                    <div>
+                        <img src="img/claude_chat.jpeg" alt="Claude helping with brewing" class="brew-image">
+                        <p style="text-align: center; margin-top: 10px;"><em>AI assistants can help with recipe formulation!</em></p>
+                        
+                        <h3>Local Resources</h3>
+                        <ul>
+                            <li><strong>Homebrew Shops:</strong> Knowledge + fresh ingredients</li>
+                            <li><strong>Homebrew Clubs:</strong> Learn from experienced brewers</li>
+                            <li><strong>Competitions:</strong> Get feedback from certified judges</li>
+                            <li><strong>Local Breweries:</strong> Many brewers started as homebrewers</li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div style="text-align: center; margin-top: 40px; padding: 30px; background: #e8f4f8; border-radius: 15px;">
+                    <h2 style="color: #2c3e50; margin-bottom: 20px;">Ready to Start Brewing?</h2>
+                    <p style="font-size: 1.2em; margin-bottom: 20px;">Remember: Relax, Don't Worry, Have a Homebrew!</p>
+                    <p style="font-size: 1.1em;">The best beer is the one you brew yourself. Start simple, keep good notes, and enjoy the journey.</p>
+                    <p style="margin-top: 20px; font-style: italic;">"Brewing beer is a blend of art and science - embrace both!"</p>
+                    <div class="tip-box" style="margin-top: 20px;">
+                        <strong>🚀 Quick Start:</strong> Get Brewfather app → Find a simple recipe → Buy a FermZilla → Start pressure fermenting!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="navigation">
+        <button class="nav-btn" id="prevBtn" onclick="changeSlide(-1)">← Previous</button>
+        <div class="dots" id="dots"></div>
+        <span class="slide-indicator"><span id="currentSlide">1</span> / <span id="totalSlides">19</span></span>
+        <button class="nav-btn" id="nextBtn" onclick="changeSlide(1)">Next →</button>
+    </div>
+    
+    <script>
+        let currentSlide = 0;
+        const slides = document.querySelectorAll('.slide');
+        const totalSlides = slides.length;
+        
+        // Initialize
+        document.getElementById('totalSlides').textContent = totalSlides;
+        createDots();
+        updateSlideVisibility();
+        
+        function createDots() {
+            const dotsContainer = document.getElementById('dots');
+            for (let i = 0; i < totalSlides; i++) {
+                const dot = document.createElement('div');
+                dot.className = 'dot';
+                if (i === 0) dot.classList.add('active');
+                dot.onclick = () => goToSlide(i);
+                dotsContainer.appendChild(dot);
+            }
+        }
+        
+        function changeSlide(direction) {
+            slides[currentSlide].classList.remove('active');
+            if (direction === -1) {
+                slides[currentSlide].classList.add('prev');
+            } else {
+                slides[currentSlide].classList.add('prev');
+            }
+            
+            currentSlide += direction;
+            
+            if (currentSlide < 0) currentSlide = 0;
+            if (currentSlide >= totalSlides) currentSlide = totalSlides - 1;
+            
+            updateSlideVisibility();
+        }
+        
+        function goToSlide(index) {
+            slides[currentSlide].classList.remove('active');
+            slides[currentSlide].classList.add('prev');
+            currentSlide = index;
+            updateSlideVisibility();
+        }
+        
+        function updateSlideVisibility() {
+            // Update slides
+            slides.forEach((slide, index) => {
+                slide.classList.remove('active', 'prev');
+                if (index < currentSlide) {
+                    slide.classList.add('prev');
+                } else if (index === currentSlide) {
+                    slide.classList.add('active');
+                }
+            });
+            
+            // Update navigation
+            document.getElementById('currentSlide').textContent = currentSlide + 1;
+            document.getElementById('prevBtn').disabled = currentSlide === 0;
+            document.getElementById('nextBtn').disabled = currentSlide === totalSlides - 1;
+            
+            // Update dots
+            document.querySelectorAll('.dot').forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentSlide);
+            });
+        }
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'ArrowLeft') changeSlide(-1);
+            if (e.key === 'ArrowRight') changeSlide(1);
+        });
+        
+        // Touch/swipe support
+        let touchStartX = 0;
+        let touchEndX = 0;
+        
+        document.addEventListener('touchstart', e => {
+            touchStartX = e.changedTouches[0].screenX;
+        });
+        
+        document.addEventListener('touchend', e => {
+            touchEndX = e.changedTouches[0].screenX;
+            handleSwipe();
+        });
+        
+        function handleSwipe() {
+            if (touchEndX < touchStartX - 50) changeSlide(1);  // Swipe left
+            if (touchEndX > touchStartX + 50) changeSlide(-1); // Swipe right
+        }
+    </script>
+</body>
+</html>
