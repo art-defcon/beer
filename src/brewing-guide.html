@@ -273,21 +273,198 @@
             margin-left: 20px;
         }
         
+        /* Mobile styles */
         @media (max-width: 768px) {
+            body {
+                overflow-y: auto;
+                overflow-x: hidden;
+                height: auto;
+                min-height: 100vh;
+            }
+            
+            .presentation-container {
+                height: auto;
+                min-height: 100vh;
+                overflow: visible;
+            }
+            
+            .slide {
+                position: relative;
+                height: auto;
+                min-height: calc(100vh - 70px);
+                padding: 10px;
+                padding-bottom: 80px;
+                display: block;
+                opacity: 1;
+                transform: none;
+                transition: none;
+            }
+            
+            .slide:not(.active) {
+                display: none;
+            }
+            
             .slide-content {
                 padding: 20px;
+                max-height: none;
+                margin: 0 auto;
+                margin-bottom: 20px;
+                border-radius: 10px;
+            }
+            
+            .navigation {
+                position: fixed;
+                bottom: 0;
+                left: 0;
+                right: 0;
+                width: 100%;
+                padding: 10px;
+                border-radius: 0;
+                background: rgba(0,0,0,0.95);
+                flex-wrap: wrap;
+                justify-content: space-between;
+                gap: 5px;
+            }
+            
+            .nav-btn {
+                padding: 8px 16px;
+                font-size: 14px;
+            }
+            
+            .dots {
+                display: none;
+            }
+            
+            .slide-indicator {
+                font-size: 12px;
+                margin: 0 5px;
             }
             
             h1 {
                 font-size: 1.8em;
+                margin-bottom: 15px;
+            }
+            
+            h2 {
+                font-size: 1.5em;
+                margin-bottom: 15px;
+            }
+            
+            h3 {
+                font-size: 1.2em;
+                margin: 15px 0 10px 0;
             }
             
             .two-column {
                 grid-template-columns: 1fr;
+                gap: 20px;
             }
             
             .equipment-grid {
                 grid-template-columns: 1fr;
+                gap: 15px;
+            }
+            
+            .equipment-item {
+                padding: 12px;
+            }
+            
+            .process-step {
+                padding: 15px;
+                margin: 15px 0;
+            }
+            
+            .tip-box, .warning-box {
+                padding: 12px;
+                margin: 12px 0;
+                font-size: 14px;
+            }
+            
+            .brew-image {
+                max-height: 250px;
+                margin: 15px auto;
+            }
+            
+            .recipe-table {
+                font-size: 12px;
+                margin: 15px 0;
+                display: block;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            
+            .recipe-table th,
+            .recipe-table td {
+                padding: 8px;
+                white-space: nowrap;
+            }
+            
+            .timeline-item {
+                flex-direction: column;
+                align-items: flex-start;
+                margin-bottom: 15px;
+            }
+            
+            .timeline-time {
+                margin-bottom: 5px;
+            }
+            
+            .timeline-content {
+                margin-left: 0;
+                width: 100%;
+                padding: 12px;
+            }
+            
+            ul {
+                margin-left: 15px;
+            }
+            
+            li {
+                margin-bottom: 6px;
+                font-size: 14px;
+            }
+            
+            .icon {
+                font-size: 36px;
+            }
+            
+            /* Improve touch targets */
+            button, a, .dot {
+                min-height: 44px;
+                min-width: 44px;
+            }
+            
+            /* Prevent horizontal scroll */
+            * {
+                max-width: 100vw;
+            }
+            
+            /* Better table scrolling */
+            .recipe-table {
+                border: 1px solid #ddd;
+                border-radius: 8px;
+            }
+            
+            /* Adjust code blocks for mobile */
+            pre {
+                font-size: 12px;
+                overflow-x: auto;
+            }
+        }
+        
+        /* Tablet styles */
+        @media (min-width: 769px) and (max-width: 1024px) {
+            .slide-content {
+                padding: 30px;
+                max-width: 90%;
+            }
+            
+            h1 {
+                font-size: 2.2em;
+            }
+            
+            .equipment-grid {
+                grid-template-columns: repeat(2, 1fr);
             }
         }
     </style>
